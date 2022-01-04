@@ -1,9 +1,9 @@
 ﻿using RestApi.Model;
 using System.Collections.Generic;
 
-namespace RestApi.Services
+namespace RestApi.Business
 {
-    public interface IPersonService
+    public interface IPersonBusiness
     {
         Person Create(Person person);
         Person FindByID(long id);
