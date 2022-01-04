@@ -3,52 +3,53 @@ using RestApi.Model.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace RestApi.Repository.Implementations
 {
-    public class PersonRepositoryImplementation : IPersonRepository
+    public class BookRepositoryImplementation : IBookRepository
     {
         private MySqlContext _context;
-        public PersonRepositoryImplementation(MySqlContext context)
+
+        public BookRepositoryImplementation(MySqlContext context)
         {
             _context = context;
         }
 
-
-        public Person Create(Person person)
+        public Book Create(Book book)
         {
             try
             {
-                _context.Add(person);
+                _context.Add(book);
                 _context.SaveChanges();
             }
             catch (Exception)
             {
                 throw;
             }
-            return person;
+            return book;
         }
 
-        public List<Person> FindAll()
+        public List<Book> FindAll()
         {
-            return _context.People.ToList();
+            return _context.Books.ToList();
         }
 
-        public Person FindByID(long id)
+        public Book FindByID(long id)
         {
-            return _context.People.SingleOrDefault(p => p.Id.Equals(id));
+            return _context.Books.SingleOrDefault(b => b.Id.Equals(id));
         }
 
-        public Person Update(Person person)
+        public Book Update(Book book)
         {
-            if (!Exists(person.Id)) return null;
+            if (!Exists(book.Id)) return null;
 
-            var result = _context.People.SingleOrDefault(p => p.Id.Equals(person.Id));
+            var result = _context.Books.SingleOrDefault(p => p.Id.Equals(book.Id));
             if (result != null)
             {
                 try
                 {
-                    _context.Entry(result).CurrentValues.SetValues(person);
+                    _context.Entry(result).CurrentValues.SetValues(book);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -56,17 +57,17 @@ namespace RestApi.Repository.Implementations
                     throw;
                 }
             }
-            return person;
+            return book;
         }
 
         public void Delete(long id)
         {
-            var result = _context.People.SingleOrDefault(p => p.Id.Equals(id));
+            var result = _context.Books.SingleOrDefault(b => b.Id.Equals(id));
             if (result != null)
             {
                 try
                 {
-                    _context.People.Remove(result);
+                    _context.Books.Remove(result);
                     _context.SaveChanges();
                 }
                 catch (Exception)
@@ -78,7 +79,8 @@ namespace RestApi.Repository.Implementations
 
         public bool Exists(long id)
         {
-            return _context.People.Any(p => p.Id.Equals(id));
+            return _context.Books.Any(b => b.Id.Equals(id));
         }
+
     }
 }

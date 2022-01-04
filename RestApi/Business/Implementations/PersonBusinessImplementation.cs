@@ -6,35 +6,35 @@ namespace RestApi.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
-        private readonly IPersonRepository _repository;
-        public PersonBusinessImplementation(IPersonRepository repository)
+        private readonly IPersonRepository _personRepository;
+        public PersonBusinessImplementation(IPersonRepository personRepository)
         {
-            _repository = repository;
+            _personRepository = personRepository;
         }
 
         public Person Create(Person person)
         {
-            return _repository.Create(person);
+            return _personRepository.Create(person);
         }
 
         public List<Person> FindAll()
         {
-            return _repository.FindAll();
+            return _personRepository.FindAll();
         }
 
         public Person FindByID(long id)
         {
-            return _repository.FindByID(id);
+            return _personRepository.FindByID(id);
         }
 
         public Person Update(Person person)
         {
-            return _repository.Update(person);
+            return _personRepository.Update(person);
         }
 
         public void Delete(long id)
         {
-            _repository.Delete(id);
+            _personRepository.Delete(id);
         }
     }
 }
