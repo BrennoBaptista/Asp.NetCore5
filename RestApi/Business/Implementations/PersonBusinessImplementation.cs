@@ -1,40 +1,40 @@
 ﻿using RestApi.Model;
-using RestApi.Repository;
+using RestApi.Repository.Generic;
 using System.Collections.Generic;
 
 namespace RestApi.Business.Implementations
 {
     public class PersonBusinessImplementation : IPersonBusiness
     {
-        private readonly IPersonRepository _personRepository;
-        public PersonBusinessImplementation(IPersonRepository personRepository)
+        private readonly IRepository<Person> _repository;
+        public PersonBusinessImplementation(IRepository<Person> repository)
         {
-            _personRepository = personRepository;
+            _repository = repository;
         }
 
         public Person Create(Person person)
         {
-            return _personRepository.Create(person);
+            return _repository.Create(person);
         }
 
         public List<Person> FindAll()
         {
-            return _personRepository.FindAll();
+            return _repository.FindAll();
         }
 
         public Person FindByID(long id)
         {
-            return _personRepository.FindByID(id);
+            return _repository.FindByID(id);
         }
 
         public Person Update(Person person)
         {
-            return _personRepository.Update(person);
+            return _repository.Update(person);
         }
 
         public void Delete(long id)
         {
-            _personRepository.Delete(id);
+            _repository.Delete(id);
         }
     }
 }

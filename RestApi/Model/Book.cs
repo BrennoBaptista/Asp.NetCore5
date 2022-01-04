@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using RestApi.Model.Base;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RestApi.Model
 {
     [Table("books")]
-    public class Book
+    public class Book : BaseEntity
     {
-        [Column("id")]
-        public long Id { get; set; }
-
         [Column("author")]
         public string Author { get; set; }
 

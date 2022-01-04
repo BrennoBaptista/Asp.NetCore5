@@ -7,8 +7,7 @@ using Microsoft.Extensions.Hosting;
 using RestApi.Business;
 using RestApi.Business.Implementations;
 using RestApi.Model.Context;
-using RestApi.Repository;
-using RestApi.Repository.Implementations;
+using RestApi.Repository.Generic;
 using Serilog;
 using System;
 using System.Collections.Generic;
@@ -41,10 +40,9 @@ namespace RestApi
                 MigrateDatabase(connection);
             }
 
+            services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
-            services.AddScoped<IBookRepository, BookRepositoryImplementation>();
             services.AddApiVersioning();
         }
 
