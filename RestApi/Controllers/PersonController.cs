@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RestApi.Business;
 using RestApi.Data.DTO;
+using RestApi.Hypermedia.Filters;
 
 namespace RestApi.Controllers
 {
@@ -21,12 +22,14 @@ namespace RestApi.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
             return Ok(_personBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
             var person = _personBusiness.FindByID(id);
@@ -36,6 +39,7 @@ namespace RestApi.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonDTO person)
         {
             if (person == null)
@@ -44,6 +48,7 @@ namespace RestApi.Controllers
         }
 
         [HttpPut]
+        [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonDTO person)
         {
             if (person == null)

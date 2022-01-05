@@ -1,5 +1,4 @@
 ﻿using RestApi.Data.DTO;
-using RestApi.Model;
 using System.Collections.Generic;
 
 namespace RestApi.Business

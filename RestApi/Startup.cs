@@ -6,6 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RestApi.Business;
 using RestApi.Business.Implementations;
+using RestApi.Hypermedia.Enricher;
+using RestApi.Hypermedia.Filters;
 using RestApi.Model.Context;
 using RestApi.Repository.Generic;
 using Serilog;
@@ -48,7 +50,10 @@ namespace RestApi
                 options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json").ToString());
             }).AddXmlSerializerFormatters();
 
-
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+            filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
+            services.AddSingleton(filterOptions);
 
             services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
@@ -92,6 +97,7 @@ namespace RestApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/v{version=apiVersion}/{id?}");
             });
         }
     }
