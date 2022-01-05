@@ -1,14 +1,15 @@
-﻿using RestApi.Model;
+﻿using RestApi.Data.DTO;
+using RestApi.Model;
 using System.Collections.Generic;
 
 namespace RestApi.Business
 {
     public interface IBookBusiness
     {
-        Book Create(Book book);
-        Book FindByID(long id);
-        List<Book> FindAll();
-        Book Update(Book book);
+        BookDTO Create(BookDTO book);
+        BookDTO FindByID(long id);
+        List<BookDTO> FindAll();
+        BookDTO Update(BookDTO book);
         void Delete(long id);
     }
 }
