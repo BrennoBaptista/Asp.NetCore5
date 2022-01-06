@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using RestApi.Business;
 using RestApi.Business.Implementations;
 using RestApi.Hypermedia.Enricher;
@@ -19,6 +21,8 @@ namespace RestApi
 {
     public class Startup
     {
+
+
         public IWebHostEnvironment Environment { get; }
 
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
@@ -59,6 +63,22 @@ namespace RestApi
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddApiVersioning();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1",
+                    new OpenApiInfo
+                    {
+                        Title = "REST API's From 0 to Azure with ASP.NET Core 5 and Docker",
+                        Version = "v1",
+                        Description = "API RestFul developed in Leandro's Course'",
+                        Contact = new OpenApiContact
+                        {
+                            Name = "Brenno Baptista",
+                            Url = new Uri("https://github.com/BrennoBaptista")
+                        }
+                    });
+            });
         }
 
         private void MigrateDatabase(string connection)
@@ -91,6 +111,16 @@ namespace RestApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API's From 0 to Azure with ASP.NET Core 5 and Docker - v1");
+            });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$","swagger");
+            app.UseRewriter(option);
 
             app.UseAuthorization();
 

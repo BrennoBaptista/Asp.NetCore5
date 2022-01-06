@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using RestApi.Business;
 using RestApi.Data.DTO;
 using RestApi.Hypermedia.Filters;
+using System.Collections.Generic;
 
 namespace RestApi.Controllers
 {
@@ -22,6 +23,10 @@ namespace RestApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType((200),Type = typeof(List<PersonDTO>))]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get()
         {
@@ -29,6 +34,10 @@ namespace RestApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType((200), Type = typeof(PersonDTO))]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Get(long id)
         {
@@ -39,6 +48,9 @@ namespace RestApi.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType((200), Type = typeof(PersonDTO))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Post([FromBody] PersonDTO person)
         {
@@ -48,6 +60,9 @@ namespace RestApi.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType((200), Type = typeof(PersonDTO))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         [TypeFilter(typeof(HyperMediaFilter))]
         public IActionResult Put([FromBody] PersonDTO person)
         {
@@ -57,6 +72,9 @@ namespace RestApi.Controllers
         }
 
         [HttpDelete("{id}")]
+        [ProducesResponseType((204))]
+        [ProducesResponseType((400))]
+        [ProducesResponseType((401))]
         public IActionResult Delete(long id)
         {
             _personBusiness.Delete(id);
